@@ -4,14 +4,20 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import HomePage from "./page/HomePage/HomePage";
 import LoginPage from "./page/LoginPage/LoginPage";
 import Header from "./components/Header/Header";
+import DetailPage from "./page/DetailPage/DetailPage";
+import HomeLayout from "./layout/HomeLayout";
+import Spinner from "./components/Spinner/Spinner";
 
 function App() {
   return (
     <div className="">
+      <Spinner />
       <BrowserRouter>
-        <Header />
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<HomeLayout />}>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/detail/:idPhim" element={<DetailPage />} />
+          </Route>
           <Route path="/login" element={<LoginPage />} />
         </Routes>
       </BrowserRouter>

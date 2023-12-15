@@ -1,9 +1,46 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 export default function Header() {
   // useNavigate dùng để điều hướng trang, không gấy reload
   let navigative = useNavigate();
+  //  lấy dữ liệu từ redux về
+  //  useSelector ~ mapStateToProps
+  let user = useSelector((state) => state.userReducer.user);
+  let renderMenu = () => {
+    if (user) {
+      return (
+        <>
+          <span>{user.hoTen}</span>
+          <button
+            className="btn-theme"
+            onClick={() => {
+              window.location.href = "/";
+              //  clear data user localStorage
+              localStorage.removeItem("USER_INFO");
+            }}
+          >
+            Đăng xuất
+          </button>
+        </>
+      );
+    } else {
+      return (
+        <div className="space-x-2">
+          <button
+            className="btn-theme"
+            onClick={() => {
+              window.location.href = "/login";
+            }}
+          >
+            Đăng nhập
+          </button>
+          <button className="btn-theme">Đăng ký</button>
+        </div>
+      );
+    }
+  };
   return (
     <div>
       <div className="container flex items-center justify-between h-20 ">
@@ -11,17 +48,11 @@ export default function Header() {
           onClick={() => {
             navigative("/");
           }}
-          className="font-medium text-red-500 text-3xl"
+          className="font-medium text-red-500 text-4xl animate-pulse"
         >
           CyberFlix
         </span>
-        <button
-          onClick={() => {
-            navigative("/login");
-          }}
-        >
-          Đăng nhập
-        </button>
+        <div className="space-x-5">{renderMenu()}</div>
       </div>
     </div>
   );

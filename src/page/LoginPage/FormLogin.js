@@ -1,19 +1,42 @@
 import React from "react";
 import { Button, Checkbox, Form, Input, message } from "antd";
 import { https } from "../../service/config";
+import { useDispatch } from "react-redux";
+import { SET_INFO } from "../../redux/constant/user";
+import { useNavigate } from "react-router-dom";
+import { loginAction } from "../../redux/action/user";
 
 const FormLogin = () => {
+  let dispatch = useDispatch();
+  let navigative = useNavigate();
+
+  // cách 1: gọi api từng component
+  // const onFinishV2 = (values) => {
+  //   https
+  //     .post(`/api/QuanLyNguoiDung/DangNhap`, values)
+  //     .then((res) => {
+  //       // đẩy data xuống localStorage để khi user load trang thì thông tin đăng nhập vẫn còn
+  //       let dataJson = JSON.stringify(res.data.content);
+  //       localStorage.setItem("USER_INFO", dataJson);
+
+  //       // console.log("đăng nhập thành công", res.data.content);
+  //       message.success("Đăng nhập thành công");
+  //       navigative("/");
+  //       //  đẩy thông tin user lên redux
+  //       dispatch({
+  //         type: SET_INFO,
+  //         payload: res.data.content,
+  //       });
+  //     })
+  //     .catch((err) => {
+  //       // console.log("đăng nhập thất bại", err);
+  //       message.error("Đăng nhập thất bại");
+  //     });
+  // };
+
+  //  cách 2: gọi api trên redux - sau chỉ cần dispatch funtion (gọn hơn)
   const onFinish = (values) => {
-    https
-      .post(`/api/QuanLyNguoiDung/DangNhap`, values)
-      .then((res) => {
-        console.log("đăng nhập thành công", res);
-        message.success("Đăng nhập thành công");
-      })
-      .catch((err) => {
-        console.log("đăng nhập thất bại", err);
-        message.error("Đăng nhập thất bại");
-      });
+    dispatch(loginAction(values, navigative));
   };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
