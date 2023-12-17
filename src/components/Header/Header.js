@@ -36,7 +36,14 @@ export default function Header() {
           >
             Đăng nhập
           </button>
-          <button className="btn-theme">Đăng ký</button>
+          <button
+            className="btn-theme "
+            onClick={() => {
+              window.location.href = "/register";
+            }}
+          >
+            Đăng ký
+          </button>
         </div>
       );
     }

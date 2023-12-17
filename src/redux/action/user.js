@@ -11,6 +11,7 @@ export let loginAction = (values, onNavigate) => {
     https
       .post(`/api/QuanLyNguoiDung/DangNhap`, values)
       .then((res) => {
+        console.log("😃 - file: user.js:14 - .then - res:", res.data.content);
         message.success("redux thunk thành công");
 
         // đẩy data xuống localStorage để khi user load trang thì thông tin đăng nhập vẫn còn

@@ -7,6 +7,7 @@ import Header from "./components/Header/Header";
 import DetailPage from "./page/DetailPage/DetailPage";
 import HomeLayout from "./layout/HomeLayout";
 import Spinner from "./components/Spinner/Spinner";
+import RegisterPage from "./page/RegisterPage/RegisterPage";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="/detail/:idPhim" element={<DetailPage />} />
           </Route>
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
         </Routes>
       </BrowserRouter>
     </div>

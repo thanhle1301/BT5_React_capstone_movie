@@ -104,7 +104,7 @@ const FormLogin = () => {
         }}
       >
         <Button
-          className="bg-blue-600  hover:text-white hover:border-transparent font-bold"
+          className="bg-green-600  hover:text-white hover:border-transparent font-bold"
           htmlType="submit"
         >
           Đăng nhập
