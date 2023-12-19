@@ -8,6 +8,7 @@ import DetailPage from "./page/DetailPage/DetailPage";
 import HomeLayout from "./layout/HomeLayout";
 import Spinner from "./components/Spinner/Spinner";
 import RegisterPage from "./page/RegisterPage/RegisterPage";
+import BookingTicket from "./page/BookingTicket/BookingTicket";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/" element={<HomeLayout />}>
             <Route path="/" element={<HomePage />} />
             <Route path="/detail/:idPhim" element={<DetailPage />} />
+            <Route path="/booking/:maLichChieu" element={<BookingTicket />} />
           </Route>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />

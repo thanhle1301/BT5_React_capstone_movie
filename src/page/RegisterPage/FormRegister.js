@@ -1,21 +1,41 @@
-import React from "react";
-import { form, Button, Checkbox, DatePicker, Input, Select, Form } from "antd";
+import React, { useEffect } from "react";
+import {
+  form,
+  Button,
+  Checkbox,
+  DatePicker,
+  Input,
+  Select,
+  Form,
+  message,
+} from "antd";
 import { Navigate, useNavigate } from "react-router-dom";
+import { https } from "../../service/config";
+import axios, { Axios } from "axios";
+import { useDispatch } from "react-redux";
+import { SET_REGISTOR } from "../../redux/constant/user";
+import { registorAction } from "../../redux/action/registor";
 
 export default function FormRegister() {
   // quay về home
   let navigate = useNavigate();
-
+  let dispatch = useDispatch();
   // kiểm tra checkbox
   const validatePhone = (_, value) => {
     // Sử dụng regex để kiểm tra xem giá trị có phải là số hay không
     const isNumber = /^[0-9]+$/.test(value);
-
     if (!isNumber) {
       return Promise.reject("Vui lòng nhập số điện thoại hợp lệ");
     }
 
     return Promise.resolve();
+  };
+
+  const onFinish1 = (values) => {
+    dispatch(registorAction(values, navigate));
+  };
+  const onFinishFailed1 = (errorReg) => {
+    console.log("Failed:", errorReg);
   };
   return (
     // https://www.youtube.com/watch?v=ajp8hmAKEhM add form
@@ -24,12 +44,8 @@ export default function FormRegister() {
         labelCol={{ span: 10 }}
         wrapperCol={{ span: 14 }}
         autoComplete="off"
-        onFinish={(values) => {
-          console.log({ values });
-        }}
-        onFinishFailed={(error) => {
-          console.log({ error });
-        }}
+        onFinish={onFinish1}
+        onFinishFailed={onFinishFailed1}
       >
         <Form.Item
           name="taiKhoan"
@@ -165,11 +181,11 @@ export default function FormRegister() {
           <Input placeholder="Số điện thoại" />
         </Form.Item>
 
-        <Form.Item name="maNhom" label="Nhóm">
+        {/* <Form.Item name="maNhom" label="Nhóm">
           <Select placeholder="Lựa chọn nhóm">
             <Select.Option value="GP01">Nhóm 1</Select.Option>
           </Select>
-        </Form.Item>
+        </Form.Item> */}
 
         <Form.Item
           name="agree"
@@ -219,3 +235,5 @@ export default function FormRegister() {
     </div>
   );
 }
+
+// record movie 5.1 1:09 phút

@@ -8,7 +8,7 @@ export default function TabMovie() {
   const [heThongRap, setheThongRap] = useState([]);
   useEffect(() => {
     https
-      .get(`/api/QuanLyRap/LayThongTinLichChieuHeThongRap?maNhom=GP11`)
+      .get(`/api/QuanLyRap/LayThongTinLichChieuHeThongRap?maNhom=GP01`)
       .then((res) => {
         setheThongRap(res.data.content);
       })
@@ -53,7 +53,11 @@ export default function TabMovie() {
                   className="space-y-5 overflow-scroll"
                 >
                   {cumRap.danhSachPhim.map((phim) => {
-                    return <ItemMovie data={phim} key={phim.maPhim} />;
+                    return (
+                      <div>
+                        <ItemMovie data={phim} key={phim.maPhim} />;
+                      </div>
+                    );
                   })}
                 </div>
               ),
