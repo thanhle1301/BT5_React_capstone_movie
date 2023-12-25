@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { https } from "../../../service/config";
 import { Tabs, Tooltip } from "antd";
 import ItemMovie from "./ItemMovie";
-import DetailPage from "../../DetailPage/DetailPage";
 
 export default function TabMovie() {
   const [heThongRap, setheThongRap] = useState([]);
@@ -10,6 +9,7 @@ export default function TabMovie() {
     https
       .get(`/api/QuanLyRap/LayThongTinLichChieuHeThongRap?maNhom=GP01`)
       .then((res) => {
+        console.log("😃 123:", res.data.content);
         setheThongRap(res.data.content);
       })
       .catch((err) => {

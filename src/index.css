@@ -10,3 +10,26 @@
 .btn-theme {
   @apply border-2 border-black px-3 py-1 rounded;
 }
+
+/* bỏ cancel, oke modal - BookedAccount */
+.ant-modal-footer {
+  display: none;
+}
+/* Phần thông tin đặt vé */
+.table_info_datve {
+  @apply border-2 border-gray-300 rounded p-3;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.hr_info {
+  @apply my-4;
+}
+
+.table_info_datve p {
+  @apply flex justify-between items-center;
+}
+.table_info_datve p span:first-of-type {
+  @apply font-semibold pr-5;
+}
+.table_info_datve p span:nth-of-type(2) {
+  @apply font-semibold text-green-700;
+}

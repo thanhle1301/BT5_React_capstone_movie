@@ -4,7 +4,6 @@ import { NavLink, useNavigate } from "react-router-dom";
 
 export default function ItemMovie({ data }) {
   let navigate = useNavigate();
-  console.log("😃 - file: ItemMovie.js:5 - ItemMovie - data:", data);
 
   return (
     <div className="flex space-x-5">

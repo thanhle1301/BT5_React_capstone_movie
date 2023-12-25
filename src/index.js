@@ -27,6 +27,7 @@ let rootReducer = combineReducers({
   userReducer,
   spinnerReducer,
 });
+
 const store = createStore(
   rootReducer,
   /* preloadedState, */ composeEnhancers(applyMiddleware(thunk))

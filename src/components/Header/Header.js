@@ -1,6 +1,8 @@
-import React from "react";
+import { Button, Modal } from "antd";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Banner from "../Banner/Banner";
 
 export default function Header() {
   // useNavigate dùng để điều hướng trang, không gấy reload
@@ -8,11 +10,22 @@ export default function Header() {
   //  lấy dữ liệu từ redux về
   //  useSelector ~ mapStateToProps
   let user = useSelector((state) => state.userReducer.user);
+  console.log("😃 - file: Header.js:12 - Header - user:", user);
+
   let renderMenu = () => {
     if (user) {
       return (
         <>
-          <span>{user.hoTen}</span>
+          <span
+            onClick={() => {
+              navigative("/account");
+            }}
+            style={{
+              cursor: "pointer",
+            }}
+          >
+            {user.hoTen}
+          </span>
           <button
             className="btn-theme"
             onClick={() => {
@@ -61,6 +74,7 @@ export default function Header() {
         </span>
         <div className="space-x-5">{renderMenu()}</div>
       </div>
+      <div></div>
     </div>
   );
 }

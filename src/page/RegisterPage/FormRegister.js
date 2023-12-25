@@ -1,19 +1,7 @@
-import React, { useEffect } from "react";
-import {
-  form,
-  Button,
-  Checkbox,
-  DatePicker,
-  Input,
-  Select,
-  Form,
-  message,
-} from "antd";
-import { Navigate, useNavigate } from "react-router-dom";
-import { https } from "../../service/config";
-import axios, { Axios } from "axios";
+import React from "react";
+import { Button, Checkbox, Input, Form } from "antd";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { SET_REGISTOR } from "../../redux/constant/user";
 import { registorAction } from "../../redux/action/registor";
 
 export default function FormRegister() {
