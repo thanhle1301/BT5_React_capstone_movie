@@ -14,6 +14,7 @@ export default function BookingTicketAndDoneBooking() {
   const params = useParams();
   const [thongTinDatVe, setThongTinDatVe] = useState({});
   const [gheDuocChon, setGheDuocChon] = useState([]);
+  const [gheDaChon, setGheDaChon] = useState([]);
 
   const fetchAPI = () => {
     https
@@ -31,15 +32,31 @@ export default function BookingTicketAndDoneBooking() {
     fetchAPI();
   }, []);
 
+  // const handleSeatClick = (index) => {
+  //   const updateGheNgoi = [...gheDuocChon];
+  //   const indexGheNgoi = updateGheNgoi.indexOf(index);
+  //   if (indexGheNgoi !== -1) {
+  //     updateGheNgoi.splice(indexGheNgoi, 1);
+  //   } else {
+  //     updateGheNgoi.push(index);
+  //   }
+  //   setGheDuocChon(updateGheNgoi);
+  // };
   const handleSeatClick = (index) => {
-    const updateGheNgoi = [...gheDuocChon];
-    const indexGheNgoi = updateGheNgoi.indexOf(index);
-    if (indexGheNgoi !== -1) {
-      updateGheNgoi.splice(indexGheNgoi, 1);
-    } else {
-      updateGheNgoi.push(index);
+    // Kiểm tra xem ghế đã được chọn
+    const selectedSeatIndex = gheDuocChon.indexOf(index);
+
+    // Kiểm tra xem ghế đã được đặt
+    const isSeatBooked = thongTinDatVe.danhSachGhe[index].daDat;
+
+    // Nếu ghế đã được chọn hoặc đã được đặt, không làm gì cả
+    if (selectedSeatIndex !== -1 || isSeatBooked) {
+      return;
     }
-    setGheDuocChon(updateGheNgoi);
+
+    // Cập nhật danh sách ghế được chọn
+    const updatedSelectedSeats = [...gheDuocChon, index];
+    setGheDuocChon(updatedSelectedSeats);
   };
 
   const totalGiaVe = gheDuocChon.reduce(
@@ -48,9 +65,15 @@ export default function BookingTicketAndDoneBooking() {
   );
 
   const handleClickBooking = () => {
+    if (!user) {
+      navigate("/login");
+      return;
+    }
+
     const dataToServer = {
       maLichChieu: params.maLichChieu,
       taiKhoanNguoiDung: user?.taiKhoan,
+
       danhSachVe: gheDuocChon.map((index) => ({
         maGhe: thongTinDatVe.danhSachGhe[index].maGhe,
         tenGhe: thongTinDatVe.danhSachGhe[index].tenGhe,
@@ -62,31 +85,37 @@ export default function BookingTicketAndDoneBooking() {
       })),
     };
 
-    https2.post(`/api/QuanLyDatVe/DatVe`, dataToServer).then((res) => {
-      console.log("Đặt vé thành công", res);
-      let dataDatVe = {
-        dataToServer: dataToServer,
-      };
-      let dataJson2 = JSON.stringify(dataDatVe);
-      localStorage.setItem("USER_BOOK", dataJson2);
+    https2
+      .post(`/api/QuanLyDatVe/DatVe`, dataToServer)
+      .then((res) => {
+        console.log("Đặt vé thành công", res);
+        fetchAPI();
 
-      dispatch({
-        type: SET_BOOKING,
-        payload: dataToServer,
-      });
+        let dataDatVe = {
+          dataToServer: dataToServer,
+        };
+        let dataJson2 = JSON.stringify(dataDatVe);
+        localStorage.setItem("USER_BOOK", dataJson2);
 
-      Swal.fire({
-        icon: "success",
-        title: "Đặt vé thành công",
-        showConfirmButton: true,
-        confirmButtonText: "Đồng ý",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          window.location.reload();
-          fetchAPI();
-        }
+        dispatch({
+          type: SET_BOOKING,
+          payload: dataToServer,
+        });
+
+        Swal.fire({
+          icon: "success",
+          title: "Đặt vé thành công",
+          showConfirmButton: true,
+          confirmButtonText: "Đồng ý",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // window.location.reload();
+          }
+        });
+      })
+      .catch((err) => {
+        console.log(err);
       });
-    });
   };
 
   return (
@@ -94,8 +123,10 @@ export default function BookingTicketAndDoneBooking() {
       <div className="w-2/3 ">
         {thongTinDatVe.danhSachGhe?.map((dsGhe, index) => {
           const colorChair =
-            dsGhe.loaiGhe === "Thuong" ? "rgba(128, 128, 128, 0.3)" : "orange";
+            dsGhe.loaiGhe === "Thuong" ? "rgba(128, 128, 128, 0.2)" : "orange";
           const isSelected = gheDuocChon.includes(index);
+          const isBooked = dsGhe.daDat;
+          const isSeatSelectedOrBooked = isSelected || isBooked;
           return (
             <div
               key={index}
@@ -104,14 +135,18 @@ export default function BookingTicketAndDoneBooking() {
                 display: "inline-flex",
                 flexDirection: "row",
                 marginRight: 10,
-                background: isSelected ? "green" : colorChair,
-                cursor: "pointer",
+                background: isSelected
+                  ? "green"
+                  : isBooked
+                  ? "rgba(128, 128, 128, 0.7)"
+                  : colorChair,
+                cursor: isBooked ? "not-allowed" : "pointer",
               }}
               onClick={() => {
                 handleSeatClick(index);
               }}
             >
-              {dsGhe.tenGhe}
+              {isSeatSelectedOrBooked ? "X" : dsGhe.tenGhe}
             </div>
           );
         })}
@@ -131,7 +166,7 @@ export default function BookingTicketAndDoneBooking() {
               <span>Cụm Rạp: </span>
               <span>{thongTinDatVe.thongTinPhim?.tenCumRap}</span>
             </p>
-            {/* Các thông tin khác ở đây */}
+
             <p>
               <span>Cụm Rạp: </span>
               <span>{thongTinDatVe.thongTinPhim?.tenCumRap}</span>

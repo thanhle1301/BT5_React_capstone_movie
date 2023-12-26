@@ -6,18 +6,34 @@ import { https2 } from "../../../service/config";
 export default function BookedAccount() {
   let navigative = useNavigate();
   const [booked, setBooked] = useState(true);
+  const [bookingData, setBookingData] = useState(null);
+
   const showModal = () => {
     setBooked(true);
   };
-  useEffect((dataInfo) => {
-    https2
-      .post(`/api/QuanLyNguoiDung/ThongTinTaiKhoan`, dataInfo)
-      .then((res) => {
-        console.log("😃 - file: BookedAccount.js:13 - https2.post - res:", res);
-      })
-      .catch((err) => {
-        console.log("😃 - file: BookedAccount.js:15 - https2.post - err:", err);
-      });
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Lấy dữ liệu từ localStorage
+        const storedData = localStorage.getItem("USER_BOOK");
+        // Kiểm tra xem dữ liệu có tồn tại hay không
+        if (storedData) {
+          const parsedData = JSON.parse(storedData);
+          console.log(parsedData);
+          // Cập nhật trạng thái với dữ liệu từ localStorage
+          setBookingData(parsedData);
+          // Gọi API bằng https2 để có dữ liệu mới nhất
+          const response = await https2.post(
+            `/api/QuanLyNguoiDung/ThongTinTaiKhoan`,
+            parsedData.dataToServer
+          );
+          console.log("Dữ liệu từ API:", response.data);
+        }
+      } catch (error) {
+        console.error("Lỗi khi gọi API:", error);
+      }
+    };
+    fetchData();
   }, []);
 
   const handleCancel = () => {
