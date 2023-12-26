@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { https2, https } from "../../service/config";
+import { https } from "../../service/config";
 import { useNavigate, useParams } from "react-router-dom";
-import { message } from "antd";
-import Swal from "sweetalert2";
 import DoneBooking from "./DoneBooking";
 
 export default function BookingTicket() {

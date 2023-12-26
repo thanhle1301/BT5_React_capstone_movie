@@ -1,5 +1,4 @@
 import React from "react";
-import { https2 } from "../../service/config";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { bookingAction } from "../../redux/action/booking";
