@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { RingLoader } from "react-spinners";
 
-export default function spinner() {
+export default function useSpinner() {
   let isLoading = useSelector((state) => state.spinnerReducer.isLoading);
   return isLoading ? (
     <div
