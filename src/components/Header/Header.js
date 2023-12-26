@@ -2,7 +2,6 @@ import { Button, Modal } from "antd";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Banner from "../Banner/Banner";
 
 export default function Header() {
   // useNavigate dùng để điều hướng trang, không gấy reload
