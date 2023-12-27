@@ -1,205 +1,213 @@
 import React, { useEffect, useState } from "react";
-import { https, https2 } from "../../service/config";
-import { useNavigate, useParams } from "react-router-dom";
+
+import { useSelector } from "react-redux";
+import { https2 } from "../../service/config";
+import { useParams } from "react-router-dom";
+import { message } from "antd";
+import { USER_INFO } from "../../redux/constant/user";
 import Swal from "sweetalert2";
-import { useDispatch, useSelector } from "react-redux";
-import { SET_BOOKING } from "../../redux/constant/user";
 
-import { USER_INFO } from "../LoginPage/FormLogin";
-export default function BookingTicketAndDoneBooking() {
-  let user = useSelector((state) => state.userReducer.user);
+export default function BookingTicket() {
+  let params = useParams();
 
-  let dispatch = useDispatch();
-  const navigate = useNavigate();
-  const params = useParams();
-  const [thongTinDatVe, setThongTinDatVe] = useState({});
-  const [gheDuocChon, setGheDuocChon] = useState([]);
+  const [thongTinDatVe, setthongTinDatVe] = useState({});
+  const [gheDuocChon, setgheDuocChon] = useState([]);
+  console.log("booking :", thongTinDatVe, gheDuocChon);
 
   const fetchAPI = () => {
-    https
+    https2
       .get(
         `/api/QuanLyDatVe/LayDanhSachPhongVe?MaLichChieu=${params.maLichChieu}`
       )
       .then((res) => {
-        setThongTinDatVe(res.data.content);
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log("err:", err);
-      });
-  };
-  useEffect(() => {
-    fetchAPI();
-  }, []);
-
-  const handleSeatClick = (index) => {
-    const selectedSeatIndex = gheDuocChon.indexOf(index);
-    const isSeatBooked = thongTinDatVe.danhSachGhe[index].daDat;
-    if (selectedSeatIndex !== -1 || isSeatBooked) {
-      return;
-    }
-    // Cập nhật danh sách ghế được chọn
-    const updatedSelectedSeats = [...gheDuocChon, index];
-    setGheDuocChon(updatedSelectedSeats);
-  };
-
-  const totalGiaVe = gheDuocChon.reduce(
-    (sum, index) => sum + thongTinDatVe.danhSachGhe[index].giaVe,
-    0
-  );
-
-  const handleClickBooking = () => {
-    if (!user) {
-      navigate("/login");
-      return;
-    }
-
-    const dataToServer = {
-      maLichChieu: params.maLichChieu,
-      taiKhoanNguoiDung: user?.taiKhoan,
-      ngayChieu: thongTinDatVe.thongTinPhim.ngayChieu,
-      danhSachVe: gheDuocChon.map((index) => ({
-        maGhe: thongTinDatVe.danhSachGhe[index].maGhe,
-        tenGhe: thongTinDatVe.danhSachGhe[index].tenGhe,
-        maRap: thongTinDatVe.thongTinPhim.tenCumRap,
-        loaiGhe: thongTinDatVe.danhSachGhe[index].loaiGhe,
-        stt: thongTinDatVe.danhSachGhe[index].stt,
-        giaVe: thongTinDatVe.danhSachGhe[index].giaVe,
-        daDat: false,
-      })),
-    };
-
-    https2
-      .post(`/api/QuanLyDatVe/DatVe`, dataToServer)
-      .then((res) => {
-        console.log("Đặt vé thành công", res);
-
-        let dataDatVe = {
-          dataToServer: dataToServer,
-        };
-        let dataJson2 = JSON.stringify(dataDatVe);
-        localStorage.setItem("USER_BOOK", dataJson2);
-
-        dispatch({
-          type: SET_BOOKING,
-          payload: dataToServer,
-        });
-
-        Swal.fire({
-          icon: "success",
-          title: "Đặt vé thành công",
-          showConfirmButton: true,
-          confirmButtonText: "Đồng ý",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            fetchAPI();
-
-            window.location.reload();
-          }
-        });
+        setthongTinDatVe(res.data.content);
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
+  useEffect(() => {
+    fetchAPI();
+  }, []);
+  let user = useSelector((state) => state.userReducer.user);
+
+  const handleBooking = async (payload) => {
+    if (!localStorage.getItem(USER_INFO)) {
+      Swal.fire({
+        icon: "error",
+        title: "Bạn chưa đăng nhập, vui lòng đăng nhập",
+        showConfirmButton: true,
+        confirmButtonText: "Đồng ý",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          return (window.location.href = "/login");
+        }
+      });
+    } else {
+      try {
+        const response = await https2.post("/api/QuanLyDatVe/DatVe", payload);
+        if (response.status === 200) {
+          message.success("booking successfully!");
+
+          setgheDuocChon([]);
+          fetchAPI();
+        }
+      } catch (err) {
+        message.error("booking faild please try again!");
+      }
+    }
+  };
+
+  const handleSelected = (chair) => {
+    const findChair = gheDuocChon.find((ele) => ele.maGhe === chair.maGhe);
+
+    if (findChair) {
+      const filterData = gheDuocChon.filter((ele) => ele.maGhe !== chair.maGhe);
+      setgheDuocChon(filterData);
+    } else {
+      setgheDuocChon([...gheDuocChon, chair]);
+    }
+  };
+  let renderGhe = () => {
+    return thongTinDatVe.danhSachGhe?.map((ghe, index) => {
+      const colorChair =
+        ghe.loaiGhe === "Thuong" ? "rgba(128, 128, 128, 0.2)" : "orange";
+      const isSelected = gheDuocChon.some((chair) => chair.maGhe === ghe.maGhe);
+
+      const isBooked = ghe.daDat;
+      const isSeatSelectedOrBooked = isBooked;
+      return (
+        <div
+          key={index}
+          className="rounded font-bold justify-center items-center my-1 w-9 h-9 hover:bg-white"
+          style={{
+            display: "inline-flex",
+            flexDirection: "row",
+            marginRight: 10,
+            background: isSelected
+              ? "green"
+              : isBooked
+              ? "rgba(128, 128, 128, 0.7)"
+              : colorChair,
+            cursor: isBooked ? "not-allowed" : "pointer",
+          }}
+          onClick={() => {
+            handleSelected(ghe);
+          }}
+        >
+          {isSeatSelectedOrBooked ? "X" : ghe.tenGhe}
+        </div>
+      );
+    });
+  };
+  const totalGiaVe = gheDuocChon.reduce((tongTien, ghe, index) => {
+    return (tongTien += ghe.giaVe);
+  }, 0);
+
   return (
-    <div className="flex container">
-      <div className="w-2/3 ">
-        {thongTinDatVe.danhSachGhe?.map((dsGhe, index) => {
-          console.log(
-            "😃 - file: BookingTicket.js:110 - {thongTinDatVe.danhSachGhe?.map - thongTinDatVe:",
-            thongTinDatVe
-          );
-          const colorChair =
-            dsGhe.loaiGhe === "Thuong" ? "rgba(128, 128, 128, 0.2)" : "orange";
-          const isSelected = gheDuocChon.includes(index);
-          const isBooked = dsGhe.daDat;
-          const isSeatSelectedOrBooked = isSelected || isBooked;
-          return (
-            <div
-              key={index}
-              className="rounded font-bold justify-center items-center my-1 w-9 h-9 hover:bg-white"
-              style={{
-                display: "inline-flex",
-                flexDirection: "row",
-                marginRight: 10,
-                background: isSelected
-                  ? "green"
-                  : isBooked
-                  ? "rgba(128, 128, 128, 0.7)"
-                  : colorChair,
-                cursor: isBooked ? "not-allowed" : "pointer",
-              }}
-              onClick={() => {
-                handleSeatClick(index);
-              }}
-            >
-              {isSeatSelectedOrBooked ? "X" : dsGhe.tenGhe}
-            </div>
-          );
-        })}
-      </div>
-      <div className="w-1/3">
-        <div className="">
-          <div className="table_info_datve">
-            <div className="text-5xl text-center text-green-600 ">
-              {totalGiaVe.toLocaleString("vi-VN", {
-                style: "currency",
-                currency: "VND",
-              })}
-            </div>
-            <hr className="hr_info" />
-
-            <p>
-              <span>Cụm Rạp: </span>
-              <span>{thongTinDatVe.thongTinPhim?.tenCumRap}</span>
-            </p>
-
-            <p>
-              <span>Cụm Rạp: </span>
-              <span>{thongTinDatVe.thongTinPhim?.tenCumRap}</span>
-            </p>
-            <hr className="hr_info" />
-            <p>
-              <span>Địa chỉ: </span>
-
-              <span>{thongTinDatVe.thongTinPhim?.diaChi}</span>
-            </p>
-            <hr className="hr_info" />
-            <p>
-              <span> Rạp: </span>
-              <span>{thongTinDatVe.thongTinPhim?.tenRap}</span>
-            </p>
-            <hr className="hr_info" />
-            <p>
-              <span>Ngày giờ chiếu:</span>
-              <span>
-                {thongTinDatVe.thongTinPhim?.ngayChieu}
+    <div className="container ">
+      <div className="grid grid-cols-12 ">
+        <div
+          className=" col-span-8"
+          style={{
+            width: "90%",
+            boxSizing: "border-box",
+            display: "block",
+          }}
+        >
+          <div
+            style={{
+              width: "79.9%",
+              boxSizing: "border-box",
+              margin: "auto",
+              display: "block",
+            }}
+          >
+            {renderGhe()}
+          </div>
+        </div>
+        <div className=" col-span-4 space-y-5 table_info_datve">
+          <div className="text-5xl text-center text-green-600  ">
+            {totalGiaVe.toLocaleString("vi-VN", {
+              style: "currency",
+              currency: "VND",
+            })}
+          </div>
+          <hr />
+          <div className="flex justify-between">
+            <h3 className="text-xl">Cụm Rạp</h3>
+            <h3 className="text-xl font-medium text-green-500">
+              {thongTinDatVe.thongTinPhim?.tenCumRap}
+            </h3>
+          </div>
+          <hr />
+          <div className="flex justify-between">
+            <h3 className="text-xl">Địa chỉ</h3>
+            <h3 className="text-xl font-medium text-green-500">
+              {thongTinDatVe.thongTinPhim?.diaChi}
+            </h3>
+          </div>
+          <hr />
+          <div className="flex justify-between">
+            <h3 className="text-xl">Rạp</h3>
+            <h3 className="text-xl font-medium text-green-500">
+              {thongTinDatVe.thongTinPhim?.tenRap}
+            </h3>
+          </div>
+          <hr />
+          <div className="flex justify-between">
+            <h3 className="text-xl">Ngày giờ chiếu: </h3>
+            <h3 className="text-xl font-medium text-green-500">
+              {thongTinDatVe.thongTinPhim?.ngayChieu} ~{" "}
+              <span className="text-red-500 font-medium">
                 {thongTinDatVe.thongTinPhim?.gioChieu}
               </span>
-            </p>
-            <hr className="hr_info" />
-            <p>
-              <span>Tên Phim:</span>
-              <span>{thongTinDatVe.thongTinPhim?.tenPhim}</span>
-            </p>
-            <hr className="hr_info" />
-            <p>
-              <span>Chọn: </span>
-              <span>
-                {gheDuocChon.length > 0 &&
-                  gheDuocChon
-                    .map(
-                      (index) =>
-                        "Ghế " + thongTinDatVe.danhSachGhe[index].tenGhe
-                    )
-                    .join(", ")}
-              </span>
-            </p>
+            </h3>
+          </div>
+          <hr />
+          <div className="flex justify-between">
+            <h3 className="text-xl">Tên phim: </h3>
+            <h3 className="text-xl font-medium text-green-500">
+              {thongTinDatVe.thongTinPhim?.tenPhim}
+            </h3>
+          </div>
+          <hr />
+          <div className="flex justify-between">
+            <h3 className="text-xl">Chọn: </h3>
+            <div className="text-xl font-medium text-green-500 ml-10">
+              {gheDuocChon.map((item, index) => {
+                return (
+                  <span style={{ fontSize: "20px" }} key={index}>
+                    Ghế {item.tenGhe}
+                  </span>
+                );
+              })}
+            </div>
+          </div>
+          <hr />
+          {/* <div>
+            <i>Email : </i>
+            {user.email}
+          </div> */}
+          {/* <div>
+            <i>Phone : </i>
+            {user.soDT}
+          </div> */}
+          <div>
             <button
-              onClick={handleClickBooking}
-              className="bg-orange-600 rounded text-white text-3xl w-100 py-2"
+              onClick={() => {
+                const payload = {
+                  maLichChieu: thongTinDatVe?.thongTinPhim?.maLichChieu,
+                  danhSachVe: gheDuocChon.map((chair) => ({
+                    maGhe: chair.maGhe,
+                    giaVe: chair.giaVe,
+                  })),
+                };
+
+                handleBooking(payload);
+              }}
+              className="bg-orange-500 hover:bg-green-600 text-white py-3 w-full rounded text-3xl"
             >
               ĐẶT VÉ
             </button>

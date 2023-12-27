@@ -35,7 +35,7 @@ export default function Banner() {
     ));
   };
   return (
-    <div className="container">
+    <div className="">
       <Carousel afterChange={onChange} autoplaySpeed={2000} autoplay="true">
         {renderBanner()}
       </Carousel>
