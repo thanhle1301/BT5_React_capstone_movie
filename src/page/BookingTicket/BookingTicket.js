@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { https, https2 } from "../../service/config";
 import { useNavigate, useParams } from "react-router-dom";
-import DoneBooking from "./DoneBooking";
 import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 import { SET_BOOKING } from "../../redux/constant/user";
 
+import { USER_INFO } from "../LoginPage/FormLogin";
 export default function BookingTicketAndDoneBooking() {
   let user = useSelector((state) => state.userReducer.user);
 
@@ -14,7 +14,6 @@ export default function BookingTicketAndDoneBooking() {
   const params = useParams();
   const [thongTinDatVe, setThongTinDatVe] = useState({});
   const [gheDuocChon, setGheDuocChon] = useState([]);
-  const [gheDaChon, setGheDaChon] = useState([]);
 
   const fetchAPI = () => {
     https
@@ -23,6 +22,7 @@ export default function BookingTicketAndDoneBooking() {
       )
       .then((res) => {
         setThongTinDatVe(res.data.content);
+        console.log(res.data);
       })
       .catch((err) => {
         console.log("err:", err);
@@ -32,28 +32,12 @@ export default function BookingTicketAndDoneBooking() {
     fetchAPI();
   }, []);
 
-  // const handleSeatClick = (index) => {
-  //   const updateGheNgoi = [...gheDuocChon];
-  //   const indexGheNgoi = updateGheNgoi.indexOf(index);
-  //   if (indexGheNgoi !== -1) {
-  //     updateGheNgoi.splice(indexGheNgoi, 1);
-  //   } else {
-  //     updateGheNgoi.push(index);
-  //   }
-  //   setGheDuocChon(updateGheNgoi);
-  // };
   const handleSeatClick = (index) => {
-    // Kiểm tra xem ghế đã được chọn
     const selectedSeatIndex = gheDuocChon.indexOf(index);
-
-    // Kiểm tra xem ghế đã được đặt
     const isSeatBooked = thongTinDatVe.danhSachGhe[index].daDat;
-
-    // Nếu ghế đã được chọn hoặc đã được đặt, không làm gì cả
     if (selectedSeatIndex !== -1 || isSeatBooked) {
       return;
     }
-
     // Cập nhật danh sách ghế được chọn
     const updatedSelectedSeats = [...gheDuocChon, index];
     setGheDuocChon(updatedSelectedSeats);
@@ -73,7 +57,7 @@ export default function BookingTicketAndDoneBooking() {
     const dataToServer = {
       maLichChieu: params.maLichChieu,
       taiKhoanNguoiDung: user?.taiKhoan,
-
+      ngayChieu: thongTinDatVe.thongTinPhim.ngayChieu,
       danhSachVe: gheDuocChon.map((index) => ({
         maGhe: thongTinDatVe.danhSachGhe[index].maGhe,
         tenGhe: thongTinDatVe.danhSachGhe[index].tenGhe,
@@ -89,7 +73,6 @@ export default function BookingTicketAndDoneBooking() {
       .post(`/api/QuanLyDatVe/DatVe`, dataToServer)
       .then((res) => {
         console.log("Đặt vé thành công", res);
-        fetchAPI();
 
         let dataDatVe = {
           dataToServer: dataToServer,
@@ -109,7 +92,9 @@ export default function BookingTicketAndDoneBooking() {
           confirmButtonText: "Đồng ý",
         }).then((result) => {
           if (result.isConfirmed) {
-            // window.location.reload();
+            fetchAPI();
+
+            window.location.reload();
           }
         });
       })
@@ -122,6 +107,10 @@ export default function BookingTicketAndDoneBooking() {
     <div className="flex container">
       <div className="w-2/3 ">
         {thongTinDatVe.danhSachGhe?.map((dsGhe, index) => {
+          console.log(
+            "😃 - file: BookingTicket.js:110 - {thongTinDatVe.danhSachGhe?.map - thongTinDatVe:",
+            thongTinDatVe
+          );
           const colorChair =
             dsGhe.loaiGhe === "Thuong" ? "rgba(128, 128, 128, 0.2)" : "orange";
           const isSelected = gheDuocChon.includes(index);

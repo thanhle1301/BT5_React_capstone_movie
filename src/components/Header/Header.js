@@ -9,7 +9,7 @@ export default function Header() {
   //  lấy dữ liệu từ redux về
   //  useSelector ~ mapStateToProps
   let user = useSelector((state) => state.userReducer.user);
-  console.log("😃 - file: Header.js:12 - Header - user:", user);
+  // console.log("😃 - file: Header.js:12 - Header - user:", user);
 
   let renderMenu = () => {
     if (user) {

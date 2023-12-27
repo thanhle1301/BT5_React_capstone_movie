@@ -1,0 +1,2 @@
+export const SET_USER_PROFILE = "SET_USER_PROFILE";
+export const SET_LICH_SU_DAT_VE = "SET_LICH_SU_DAT_VE";
