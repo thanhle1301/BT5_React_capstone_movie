@@ -118,7 +118,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="bg-slate-800 py-3 mb-10 text-center text-white hidden xl:block">
+      <div className="bg-slate-800 py-3 text-center text-white hidden xl:block">
         <div className="row container ">
           <div className="col-4">
             <h1>TIX</h1>

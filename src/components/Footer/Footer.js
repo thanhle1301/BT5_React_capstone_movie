@@ -41,7 +41,7 @@ export default function Footer() {
     transform: "translate(-50%, -50%)", // Dịch chuyển văn bản điều chỉnh vị trí chính xác đến giữa hình ảnh
     color: "white", // Màu văn bản trắng để tương phản với hình nền
     fontWeight: "bold",
-    fontSize: "2em", // Cỡ chữ
+    fontSize: "16px", // Cỡ chữ
     textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)", // Đổ bóng cho văn bản
   };
 
@@ -78,42 +78,52 @@ export default function Footer() {
 
   return (
     <div>
-      <div className="bgimg" style={bgImgStyle}>
-        <div style={titleStyle}>
-          Ứng dụng tiện lợi dành cho người yêu điện ảnh
-        </div>
-        <div style={textStyle}>
-          Không chỉ đặt vé, bạn còn có thể bình luận phim, chấm điểm rạp và đổi
-          quà hấp dẫn.
-        </div>
-        <div style={overlayImgStyle}>
-          <img
-            src={overlayImageUrl}
-            alt="Overlay"
-            style={{ width: "100%", height: "100%" }}
-          />
-        </div>
-        <div style={appImgStyle}>
-          <img
-            src={appImageUrl}
-            alt="Overlay"
-            style={{
-              borderRadius: "25px",
-              width: "100%",
-              height: "100%",
-            }}
-          />
-        </div>
-
-        <div>
-          <Button
-            style={buttonStyle}
-            type="primary"
-            icon={<DownloadOutlined />}
-            size={size}
+      <div className="bgimg " style={bgImgStyle}>
+        <div className="">
+          <parseFloat
+            className="lg:text-2xl md:text-xl sm:text-lg hidden md:block"
+            style={titleStyle}
           >
-            APP MIỄN PHÍ - TẢI VỀ NGAY!
-          </Button>
+            Ứng dụng tiện lợi dành cho người yêu điện ảnh
+          </parseFloat>
+          <div
+            className="lg:text-base md:text-xs sm:text-xs py-3 hidden md:block"
+            style={textStyle}
+          >
+            Không chỉ đặt vé, bạn còn có thể bình luận phim, chấm điểm rạp và
+            đổi quà hấp dẫn.
+          </div>
+
+          <div>
+            <Button
+              style={buttonStyle}
+              type="primary"
+              icon={<DownloadOutlined />}
+              size={size}
+            >
+              APP MIỄN PHÍ - TẢI VỀ NGAY!
+            </Button>
+          </div>
+        </div>
+        <div className="">
+          {/* <div style={overlayImgStyle}>
+            <img
+              src={overlayImageUrl}
+              alt="Overlay"
+              style={{ width: "100%", height: "100%" }}
+            />
+          </div> */}
+          <div className="hidden md:block" style={appImgStyle}>
+            <img
+              src={appImageUrl}
+              alt="Overlay"
+              style={{
+                borderRadius: "25px",
+                width: "100%",
+                height: "100%",
+              }}
+            />
+          </div>
         </div>
       </div>
 

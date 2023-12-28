@@ -7,7 +7,6 @@ export default function DetailPage() {
   const [detail, setdetail] = useState({});
   //  useParams lấy tham số trên url
   let { idPhim } = useParams();
-  console.log("😃 - file: DetailPage.js:10 - DetailPage - idPhim:", idPhim);
 
   //  gọi api lấy chi tiết phim
   useEffect(() => {
@@ -30,11 +29,16 @@ export default function DetailPage() {
       key: index,
       label: <img className="w-16" src={rapChieu.logo} alt="" />,
       children: (
-        <button className="border border-2 rounded p-2 m-3 text-green-500 font-bold bg-gray-100">
-          {/* to={`/booking/${idPhim}`} 
+        <div>
+          <div className="font-bold text-2xl text-green-500">
+            {rapChieu.tenHeThongRap}
+          </div>
+          <div className="btn border-t-neutral-200 border border-2 rounded p-2 m-3 text-green-500 font-bold bg-gray-100">
+            {/* to={`/booking/${idPhim}`} 
           ko có dữ liệu từ sever nên bỏ link*/}
-          <NavLink>{detail.ngayKhoiChieu}</NavLink>
-        </button>
+            <NavLink>{detail.ngayKhoiChieu}</NavLink>
+          </div>
+        </div>
       ),
     };
   });
@@ -70,7 +74,7 @@ export default function DetailPage() {
           </p>
         </div>
       </div>
-      <div>
+      <div className="mt-5">
         <Tabs
           className="border border-gray-300"
           tabPosition="left"
