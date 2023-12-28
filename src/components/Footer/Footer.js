@@ -5,7 +5,8 @@ export default function Footer() {
     <div>
       <div>app</div>
 
-      <div className="bg-slate-800 py-3 mb-10 text-center text-white hidden xl:block">
+      <div className="bg-slate-800 py-3 mb-10 text-center text-white hidden md:block">
+        {/* hidden xl:block */}
         <div className="row container ">
           <div className="col-4">
             <h1>TIX</h1>
@@ -58,17 +59,33 @@ export default function Footer() {
             <div className="col-6">
               <h1>MOBILE APP</h1>
               <div className="flex justify-evenly items-center">
-                <img className="w-10 py-3" src="./img/apple.png" alt="" />
+                <img
+                  className="sm:w-5 w-10 py-3"
+                  src="./img/apple.png"
+                  alt=""
+                />
 
-                <img className="w-10 py-3" src="./img/android.png" alt="" />
+                <img
+                  className="sm:w-5 w-10 py-3"
+                  src="./img/android.png"
+                  alt=""
+                />
               </div>
             </div>
             <div className="col-6">
               <h1>SOCIAL</h1>
               <div className="flex justify-evenly items-center">
-                <img className="w-10 py-3" src="./img/facebook.png" alt="" />
+                <img
+                  className="sm:w-5 w-10  py-3"
+                  src="./img/facebook.png"
+                  alt=""
+                />
 
-                <img className="w-10 py-3" src="./img/zalo.png" alt="" />
+                <img
+                  className="sm:w-5 w-10  py-3"
+                  src="./img/zalo.png"
+                  alt=""
+                />
               </div>
             </div>
           </div>
