@@ -37,10 +37,19 @@
   @apply w-10 mx-auto py-2;
   border-radius: 50%;
 }
-
+/* HEADER */
+.header_1 {
+  position: fixed;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.9);
+}
+/* BookedAccount - lịch sử đặt vé */
 .bg_movie {
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   background-size: contain;
 
   background-image: url(../public/img/bg-movie.jpg);
@@ -52,10 +61,10 @@
   background: rgba(0, 0, 0, 0.8);
 }
 .table_history {
-  padding-top: 50px;
+  padding: 40px;
   margin: 0 auto;
   background: white !important;
-  height: 80%;
+  height: 100%;
   width: 70%;
   position: relative;
   z-index: 1;

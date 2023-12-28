@@ -48,13 +48,13 @@ export default function BookingTicket() {
       try {
         const response = await https2.post("/api/QuanLyDatVe/DatVe", payload);
         if (response.status === 200) {
-          message.success("booking successfully!");
+          message.success("Đặt vé thành công");
 
           setgheDuocChon([]);
           fetchAPI();
         }
       } catch (err) {
-        message.error("booking faild please try again!");
+        message.error("Đặt vé thất bại");
       }
     }
   };

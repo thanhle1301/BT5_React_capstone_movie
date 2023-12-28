@@ -61,19 +61,20 @@ export default function Header() {
     }
   };
   return (
-    <div>
-      <div className="container flex items-center justify-between h-20 ">
-        <span
-          onClick={() => {
-            navigative("/");
-          }}
-          className="font-medium text-red-500 text-4xl animate-pulse"
-        >
-          CyberFlix
-        </span>
-        <div className="space-x-5">{renderMenu()}</div>
+    <div className="h-20">
+      <div className="header_1 h-20">
+        <div className=" container flex items-center justify-between h-20 ">
+          <span
+            onClick={() => {
+              navigative("/");
+            }}
+            className="font-medium text-red-500 text-4xl animate-pulse"
+          >
+            CyberFlix
+          </span>
+          <div className="space-x-5">{renderMenu()}</div>
+        </div>
       </div>
-      <div></div>
     </div>
   );
 }

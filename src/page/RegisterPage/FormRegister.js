@@ -8,6 +8,7 @@ export default function FormRegister() {
   // quay về home
   let navigate = useNavigate();
   let dispatch = useDispatch();
+
   // kiểm tra checkbox
   const validatePhone = (_, value) => {
     // Sử dụng regex để kiểm tra xem giá trị có phải là số hay không
