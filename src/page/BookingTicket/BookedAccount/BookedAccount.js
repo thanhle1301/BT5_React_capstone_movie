@@ -59,7 +59,7 @@ export default function BookedAccount() {
                 key={index}
               >
                 <div
-                  className="col-6 pr-20"
+                  className="col-lg-6 col-12  pr-20"
                   style={{
                     overflow: "hidden",
                     textOverflow: "ellipsis",
