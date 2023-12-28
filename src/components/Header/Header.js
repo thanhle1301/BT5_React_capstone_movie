@@ -68,7 +68,7 @@ export default function Header() {
             onClick={() => {
               navigative("/");
             }}
-            className="font-medium text-red-500 text-4xl animate-pulse"
+            className="font-medium text-red-500 text-4xl animate-pulse cursor-pointer"
           >
             CyberFlix
           </span>

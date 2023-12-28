@@ -5,7 +5,13 @@ import ItemMovie from "./ItemMovie";
 
 export default function TabMovie() {
   const [heThongRap, setheThongRap] = useState([]);
+  const [tabPosition, setTabPosition] = useState("left");
   useEffect(() => {
+    const handleResize = () => {
+      // Thay 767 bằng giá trị md tương ứng của bạn
+      setTabPosition(window.innerWidth >= 768 ? "left" : "top");
+    };
+    handleResize();
     https
       .get(`/api/QuanLyRap/LayThongTinLichChieuHeThongRap?maNhom=GP01`)
       .then((res) => {
@@ -34,7 +40,7 @@ export default function TabMovie() {
             return {
               key: cumRap.diaChi,
               label: (
-                <div className="text-left w-60 ">
+                <div className="text-left  w-60 ">
                   <Tooltip title={cumRap.diaChi}>
                     <p className="text-green-500 text-base font-bold">
                       {cumRap.tenCumRap}
@@ -68,13 +74,18 @@ export default function TabMovie() {
   });
 
   return (
-    <div className="container pb-96 ">
+    <div
+      className="container pb-96 
+    
+    "
+    >
+      {/* hidden md:block */}
       <h2 className="my-5 font-bold text-4xl text-center">
         Cụm rạp và suất chiếu phim
       </h2>
       <Tabs
         className="border border-gray-300"
-        tabPosition="left"
+        tabPosition={tabPosition}
         defaultActiveKey="1"
         items={items}
         onChange={onChange}
@@ -82,9 +93,3 @@ export default function TabMovie() {
     </div>
   );
 }
-
-// {
-//   key: "1",
-//   label: "Tab 1",
-//   children: "Content of Tab Pane 1",
-// },
