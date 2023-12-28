@@ -51,7 +51,7 @@ export default function DetailPage() {
                         <div className="my-2">{lichChieu.tenRap}</div>
                         <div className="my-2">
                           <NavLink
-                            className="border border-gray-200 bg-gray-100 rounded p-1"
+                            className="border border-gray-500 bg-gray-200 rounded p-1 "
                             to={`/booking/${lichChieu.maLichChieu}`}
                           >
                             {moment(lichChieu.ngayChieuGioChieu).format(
