@@ -107,18 +107,21 @@ export default function BookingTicket() {
 
   return (
     <div className="container ">
-      <div className="grid grid-cols-12 ">
+      <div className="row">
         <div
-          className=" col-span-8"
+          className="col-md-8 col-sm-12"
           style={{
-            width: "90%",
+            width: "100%",
             boxSizing: "border-box",
             display: "block",
           }}
         >
+          <div className="w-100 border rounded border-orange-500 bg-orange-500 text-center py-3 mb-5 text-white text-bold text-3xl">
+            MÀN HÌNH
+          </div>
           <div
             style={{
-              width: "79.9%",
+              width: "100%",
               boxSizing: "border-box",
               margin: "auto",
               display: "block",
@@ -126,8 +129,35 @@ export default function BookingTicket() {
           >
             {renderGhe()}
           </div>
+          <div className="py-5 row">
+            <div className="col-2">
+              <span className="border border-3 rounded bg-orange-400 py-1 px-4 mb-1"></span>
+              <p>Ghế vip</p>
+            </div>
+            <div className="col-2">
+              <span
+                className="border border-3 rounded  py-1 px-4 mb-1"
+                style={{
+                  background: "rgba(128, 128, 128, 0.2)",
+                }}
+              ></span>
+              <p>Ghế thường</p>
+            </div>
+            <div className="col-2">
+              <span
+                className="border border-3 rounded  py-1 px-3 mb-1"
+                style={{
+                  background: "rgba(128, 128, 128, 0.7)",
+                }}
+              >
+                X
+              </span>
+              <p>Ghế dã dặt</p>
+            </div>
+          </div>
         </div>
-        <div className=" col-span-4 space-y-5 table_info_datve">
+
+        <div className="  space-y-5 table_info_datve  col-md-4 col-sm-12 ">
           <div className="text-5xl text-center text-green-600  ">
             {totalGiaVe.toLocaleString("vi-VN", {
               style: "currency",
@@ -136,15 +166,15 @@ export default function BookingTicket() {
           </div>
           <hr />
           <div className="flex justify-between">
-            <h3 className="text-xl">Cụm Rạp</h3>
-            <h3 className="text-xl font-medium text-green-500">
+            <h3 className="md:text-base sm:text-sm text-xs">Cụm Rạp</h3>
+            <h3 className="md:text-base sm:text-sm font-medium text-green-500">
               {thongTinDatVe.thongTinPhim?.tenCumRap}
             </h3>
           </div>
           <hr />
           <div className="flex justify-between">
-            <h3 className="text-xl">Địa chỉ</h3>
-            <h3 className="text-xl font-medium text-green-500">
+            <h3 className="md:text-base sm:text-sm text-xs">Địa chỉ</h3>
+            <h3 className="md:text-base sm:text-sm ml-5 font-medium text-green-500">
               {thongTinDatVe.thongTinPhim?.diaChi}
             </h3>
           </div>
@@ -186,14 +216,7 @@ export default function BookingTicket() {
             </div>
           </div>
           <hr />
-          {/* <div>
-            <i>Email : </i>
-            {user.email}
-          </div> */}
-          {/* <div>
-            <i>Phone : </i>
-            {user.soDT}
-          </div> */}
+
           <div>
             <button
               onClick={() => {
