@@ -43,20 +43,22 @@ export default function DetailPage() {
                 <div className="text-green-500 font-bold text-xl">
                   {cumRap.tenCumRap}
                 </div>
-                <div>{cumRap.diaChi}</div>
+                <div className="my-2">{cumRap.diaChi}</div>
                 <div className="">
                   {cumRap.lichChieuPhim?.map((lichChieu, index) => {
                     return (
                       <div key={index}>
-                        <div>{lichChieu.tenRap}</div>
-                        <NavLink
-                          className="border border-gray-200 bg-gray-100 rounded p-1"
-                          to={`/booking/${lichChieu.maLichChieu}`}
-                        >
-                          {moment(lichChieu.ngayChieuGioChieu).format(
-                            "DD-MM-YYYY ~ HH:mm"
-                          )}
-                        </NavLink>
+                        <div className="my-2">{lichChieu.tenRap}</div>
+                        <div className="my-2">
+                          <NavLink
+                            className="border border-gray-200 bg-gray-100 rounded p-1"
+                            to={`/booking/${lichChieu.maLichChieu}`}
+                          >
+                            {moment(lichChieu.ngayChieuGioChieu).format(
+                              "DD-MM-YYYY ~ HH:mm"
+                            )}
+                          </NavLink>
+                        </div>
                       </div>
                     );
                   })}
