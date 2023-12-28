@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { https2 } from "../../../service/config";
+import { https } from "../../../service/config";
 import { Tooltip } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -15,7 +15,7 @@ export default function BookedAccount() {
     dispatch({
       type: TURN_ON,
     });
-    https2
+    https
       .post("/api/QuanLyNguoiDung/ThongTinTaiKhoan")
       .then((res) => {
         console.log("😃 - file: BookedAccount.js:80 - .then - res:", res);

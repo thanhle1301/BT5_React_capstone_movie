@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { useSelector } from "react-redux";
-import { https2 } from "../../service/config";
+import { https } from "../../service/config";
 import { useParams } from "react-router-dom";
 import { message } from "antd";
 import { USER_INFO } from "../../redux/constant/user";
@@ -15,7 +15,7 @@ export default function BookingTicket() {
   console.log("booking :", thongTinDatVe, gheDuocChon);
 
   const fetchAPI = () => {
-    https2
+    https
       .get(
         `/api/QuanLyDatVe/LayDanhSachPhongVe?MaLichChieu=${params.maLichChieu}`
       )
@@ -46,7 +46,7 @@ export default function BookingTicket() {
       });
     } else {
       try {
-        const response = await https2.post("/api/QuanLyDatVe/DatVe", payload);
+        const response = await https.post("/api/QuanLyDatVe/DatVe", payload);
         if (response.status === 200) {
           message.success("Đặt vé thành công");
 
