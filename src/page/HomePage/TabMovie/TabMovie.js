@@ -12,7 +12,7 @@ export default function TabMovie() {
     };
     handleResize();
     https
-      .get(`/api/QuanLyRap/LayThongTinLichChieuHeThongRap?maNhom=GP01`)
+      .get(`/api/QuanLyRap/LayThongTinLichChieuHeThongRap?maNhom=GP09`)
       .then((res) => {
         setheThongRap(res.data.content);
       })

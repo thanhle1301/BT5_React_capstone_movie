@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { https } from "../../service/config";
-import { Rate } from "antd";
+import { Rate, Tabs } from "antd";
 
 export default function DetailPage() {
   const [detail, setdetail] = useState({});
   //  useParams lấy tham số trên url
   let { idPhim } = useParams();
+  console.log("😃 - file: DetailPage.js:10 - DetailPage - idPhim:", idPhim);
 
   //  gọi api lấy chi tiết phim
   useEffect(() => {
     https
-      .get(`/api/QuanLyPhim/LayThongTinPhim?MaPhim=${idPhim}`)
+      .get(`/api/QuanLyRap/LayThongTinLichChieuPhim?MaPhim=${idPhim}`)
       .then((res) => {
         console.log(res.data.content);
         setdetail(res.data.content);
@@ -20,6 +21,24 @@ export default function DetailPage() {
         console.log(err);
       });
   }, []);
+  const onChange = (key) => {
+    console.log(key);
+  };
+
+  const detailItems = detail.heThongRapChieu?.map((rapChieu, index) => {
+    return {
+      key: index,
+      label: <img className="w-16" src={rapChieu.logo} alt="" />,
+      children: (
+        <button className="border border-2 rounded p-2 m-3 text-green-500 font-bold bg-gray-100">
+          {/* to={`/booking/${idPhim}`} 
+          ko có dữ liệu từ sever nên bỏ link*/}
+          <NavLink>{detail.ngayKhoiChieu}</NavLink>
+        </button>
+      ),
+    };
+  });
+
   return (
     <div className="container">
       <div className=" md:flex items-center">
@@ -51,7 +70,15 @@ export default function DetailPage() {
           </p>
         </div>
       </div>
-      <div> </div>
+      <div>
+        <Tabs
+          className="border border-gray-300"
+          tabPosition="left"
+          defaultActiveKey="1"
+          items={detailItems}
+          onChange={onChange}
+        />
+      </div>
     </div>
   );
 }
