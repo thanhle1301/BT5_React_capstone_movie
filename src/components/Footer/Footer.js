@@ -78,18 +78,12 @@ export default function Footer() {
 
   return (
     <div>
-      <div className="bgimg " style={bgImgStyle}>
+      <div className="bgimg hidden md:block" style={bgImgStyle}>
         <div className="">
-          <parseFloat
-            className="lg:text-2xl md:text-xl sm:text-lg hidden md:block"
-            style={titleStyle}
-          >
+          <parseFloat className="lg:text-2xl md:text-xl " style={titleStyle}>
             Ứng dụng tiện lợi dành cho người yêu điện ảnh
           </parseFloat>
-          <div
-            className="lg:text-base md:text-xs sm:text-xs py-3 hidden md:block"
-            style={textStyle}
-          >
+          <div className="lg:text-base md:text-xs " style={textStyle}>
             Không chỉ đặt vé, bạn còn có thể bình luận phim, chấm điểm rạp và
             đổi quà hấp dẫn.
           </div>
