@@ -7,7 +7,11 @@ export default function ItemMovie({ data }) {
 
   return (
     <div className="flex space-x-5">
-      <img className="w-32 h-48 object-cover" src={data.hinhAnh} alt="" />
+      <img
+        className="sm:w-32 w-10  sm:h-48 h-14 object-cover"
+        src={data.hinhAnh}
+        alt=""
+      />
       <div>
         <h2 className="text-2xl font-bold mb-2">{data.tenPhim}</h2>
 
