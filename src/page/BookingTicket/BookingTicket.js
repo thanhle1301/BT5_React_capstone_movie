@@ -174,37 +174,39 @@ export default function BookingTicket() {
           <hr />
           <div className="flex justify-between">
             <h3 className="md:text-base sm:text-sm text-xs">Địa chỉ</h3>
-            <h3 className="md:text-base sm:text-sm ml-5 font-medium text-green-500">
+            <h3 className="md:text-base sm:text-sm sm:ml-5 font-medium text-green-500">
               {thongTinDatVe.thongTinPhim?.diaChi}
             </h3>
           </div>
           <hr />
           <div className="flex justify-between">
-            <h3 className="text-xl">Rạp</h3>
-            <h3 className="text-xl font-medium text-green-500">
+            <h3 className="md:text-base sm:text-sm text-xs">Rạp</h3>
+            <h3 className="md:text-base sm:text-sm  font-medium text-green-500">
               {thongTinDatVe.thongTinPhim?.tenRap}
             </h3>
           </div>
           <hr />
           <div className="flex justify-between">
-            <h3 className="text-xl">Ngày giờ chiếu: </h3>
-            <h3 className="text-xl font-medium text-green-500">
+            <h3 className="md:text-base sm:text-sm text-xs">
+              Ngày giờ chiếu:{" "}
+            </h3>
+            <h3 className="md:text-base sm:text-sm  font-medium text-green-500">
               {thongTinDatVe.thongTinPhim?.ngayChieu} ~{" "}
-              <span className="text-red-500 font-medium">
+              <span className="text-red-500 font-medium md:text-base sm:text-sm ">
                 {thongTinDatVe.thongTinPhim?.gioChieu}
               </span>
             </h3>
           </div>
           <hr />
           <div className="flex justify-between">
-            <h3 className="text-xl">Tên phim: </h3>
-            <h3 className="text-xl font-medium text-green-500">
+            <h3 className="md:text-base sm:text-sm text-xs">Tên phim: </h3>
+            <h3 className="md:text-base sm:text-sm  font-medium text-green-500">
               {thongTinDatVe.thongTinPhim?.tenPhim}
             </h3>
           </div>
           <hr />
           <div className="flex justify-between">
-            <h3 className="text-xl">Chọn: </h3>
+            <h3 className="md:text-base sm:text-sm text-xs">Chọn: </h3>
             <div className="text-xl font-medium text-green-500 ml-10">
               {gheDuocChon.map((item, index) => {
                 return (
@@ -230,7 +232,7 @@ export default function BookingTicket() {
 
                 handleBooking(payload);
               }}
-              className="bg-orange-500 hover:bg-green-600 text-white py-3 w-full rounded text-3xl"
+              className="bg-orange-500 hover:bg-green-600 text-white py-3 w-full rounded md:text-3xl sm:text-xl "
             >
               ĐẶT VÉ
             </button>
