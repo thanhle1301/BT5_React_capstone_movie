@@ -73,7 +73,7 @@ export default function TabMovie() {
   });
 
   return (
-    <div className="container pb-96">
+    <div className="container">
       {/* hidden md:block */}
       <h2 className="my-5 font-bold sm:text-4xl text-2xl text-center">
         Cụm rạp và suất chiếu phim
