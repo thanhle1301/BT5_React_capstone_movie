@@ -36,9 +36,9 @@ export default function Header() {
       );
     } else {
       return (
-        <div className="space-x-2">
+        <div className="space-x-2  ">
           <button
-            className="btn-theme"
+            className="btn-theme ml-10"
             onClick={() => {
               window.location.href = "/login";
             }}
@@ -60,7 +60,7 @@ export default function Header() {
   return (
     <div className="h-20">
       <div className="header_1 h-20">
-        <div className=" container sm:flex sm:items-center sm:justify-between h-20 ">
+        <div className="  flex items-center justify-between h-20 ">
           <span
             onClick={() => {
               navigative("/");

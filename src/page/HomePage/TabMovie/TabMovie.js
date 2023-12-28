@@ -59,7 +59,7 @@ export default function TabMovie() {
                   {cumRap.danhSachPhim.map((phim) => {
                     return (
                       <div>
-                        <ItemMovie data={phim} key={phim.maPhim} />;
+                        <ItemMovie data={phim} key={phim.maPhim} />
                       </div>
                     );
                   })}
@@ -73,13 +73,9 @@ export default function TabMovie() {
   });
 
   return (
-    <div
-      className="container pb-96 
-    
-    "
-    >
+    <div className="container pb-96">
       {/* hidden md:block */}
-      <h2 className="my-5 font-bold text-4xl text-center">
+      <h2 className="my-5 font-bold sm:text-4xl text-2xl text-center">
         Cụm rạp và suất chiếu phim
       </h2>
       <Tabs

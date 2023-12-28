@@ -6,14 +6,16 @@ export default function ItemMovie({ data }) {
   let navigate = useNavigate();
 
   return (
-    <div className="flex space-x-5">
+    <div className="sm:flex sm:space-x-5">
       <img
         className="sm:w-32 w-10  sm:h-48 h-14 object-cover"
         src={data.hinhAnh}
         alt=""
       />
       <div>
-        <h2 className="text-2xl font-bold mb-2">{data.tenPhim}</h2>
+        <h2 className="sm:text-2xl text-base   font-bold mb-2">
+          {data.tenPhim}
+        </h2>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4  2xl:grid-cols-5  gap-5">
           {data.lstLichChieuTheoPhim.slice(0, 16).map((lichChieu) => {
