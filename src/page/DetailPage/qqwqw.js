@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { https } from "../../service/config";
 import { Rate, Tabs } from "antd";
-import moment from "moment";
 
 export default function DetailPage() {
   const [detail, setdetail] = useState({});
   //  useParams lấy tham số trên url
   let { idPhim } = useParams();
-  let navigate = useNavigate();
 
   //  gọi api lấy chi tiết phim
   useEffect(() => {
@@ -26,51 +24,27 @@ export default function DetailPage() {
     console.log(key);
   };
 
-  const detailItems = detail.heThongRapChieu?.map((heThong, index) => {
+  const detailItems = detail.heThongRapChieu?.map((rapChieu, index) => {
     return {
       key: index,
-      label: (
-        <div>
-          <img className="w-16" src={heThong.logo} alt="" />
-        </div>
-      ),
-
+      label: <img className="w-16" src={rapChieu.logo} alt="" />,
       children: (
         <div>
-          {heThong.cumRapChieu?.map((cumRap, index) => {
-            return (
-              <div className="" key={index}>
-                <div className="text-green-500 font-bold text-xl">
-                  {cumRap.tenCumRap}
-                </div>
-                <div>{cumRap.diaChi}</div>
-                <div className="">
-                  {cumRap.lichChieuPhim?.map((lichChieu, index) => {
-                    return (
-                      <div key={index}>
-                        <div>{lichChieu.tenRap}</div>
-                        <NavLink
-                          className="border border-gray-200 bg-gray-100 rounded p-1"
-                          to={`/booking/${lichChieu.maLichChieu}`}
-                        >
-                          {moment(lichChieu.ngayChieuGioChieu).format(
-                            "DD-MM-YYYY ~ HH:mm"
-                          )}
-                        </NavLink>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            );
-          })}
+          <div className="font-bold text-2xl text-green-500">
+            {rapChieu.tenHeThongRap}
+          </div>
+          <div className="btn border-t-neutral-200 border border-2 rounded p-2 m-3 text-green-500 font-bold bg-gray-100">
+            {/* to={`/booking/${idPhim}`} 
+          ko có dữ liệu từ sever nên bỏ link*/}
+            <NavLink>{detail.ngayKhoiChieu}</NavLink>
+          </div>
         </div>
       ),
     };
   });
 
   return (
-    <div className="container mb-10">
+    <div className="container">
       <div className=" md:flex items-center">
         <img src={detail.hinhAnh} className="w-80 mb-5" alt="" />
         <div className="text-center  flex-grow ">
@@ -102,7 +76,7 @@ export default function DetailPage() {
       </div>
       <div className="mt-5">
         <Tabs
-          className="border border-gray-300 py-3"
+          className="border border-gray-300"
           tabPosition="left"
           defaultActiveKey="1"
           items={detailItems}
