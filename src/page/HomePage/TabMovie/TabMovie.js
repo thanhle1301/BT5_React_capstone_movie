@@ -8,7 +8,6 @@ export default function TabMovie() {
   const [tabPosition, setTabPosition] = useState("left");
   useEffect(() => {
     const handleResize = () => {
-      // Thay 767 bằng giá trị md tương ứng của bạn
       setTabPosition(window.innerWidth >= 768 ? "left" : "top");
     };
     handleResize();
@@ -40,7 +39,7 @@ export default function TabMovie() {
             return {
               key: cumRap.diaChi,
               label: (
-                <div className="text-left  w-60 ">
+                <div className="text-left  md:w-60 w-28">
                   <Tooltip title={cumRap.diaChi}>
                     <p className="text-green-500 text-base font-bold">
                       {cumRap.tenCumRap}

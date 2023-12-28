@@ -4,12 +4,9 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 export default function Header() {
-  // useNavigate dùng để điều hướng trang, không gấy reload
   let navigative = useNavigate();
-  //  lấy dữ liệu từ redux về
-  //  useSelector ~ mapStateToProps
+
   let user = useSelector((state) => state.userReducer.user);
-  // console.log("😃 - file: Header.js:12 - Header - user:", user);
 
   let renderMenu = () => {
     if (user) {
@@ -63,7 +60,7 @@ export default function Header() {
   return (
     <div className="h-20">
       <div className="header_1 h-20">
-        <div className=" container flex items-center justify-between h-20 ">
+        <div className=" container sm:flex sm:items-center sm:justify-between h-20 ">
           <span
             onClick={() => {
               navigative("/");

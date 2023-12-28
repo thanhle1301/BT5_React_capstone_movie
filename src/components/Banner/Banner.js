@@ -13,6 +13,11 @@ export default function Banner() {
     textAlign: "center",
     background: "#364d79",
   };
+  if (window.matchMedia("(max-width: 768px)").matches) {
+    contentStyle.height = "400px";
+  } else {
+    contentStyle.height = "600px";
+  }
   useEffect(() => {
     https
       .get(`/api/QuanLyPhim/LayDanhSachBanner`)
@@ -29,7 +34,11 @@ export default function Banner() {
     return banner.map((item, index) => (
       <div key={index}>
         <h3 style={contentStyle}>
-          <img className="w-full" src={item.hinhAnh} alt={item.hinhAnh} />
+          <img
+            className="w-full h-full"
+            src={item.hinhAnh}
+            alt={item.hinhAnh}
+          />
         </h3>
       </div>
     ));
