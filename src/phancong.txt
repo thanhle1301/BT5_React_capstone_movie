@@ -1,2 +1,10 @@
-NHóm:
-Home,
+NHóm: Thành + Thuận
+Bài tập:  Home, Detail Movie, Booking, Login, Register . Responsive laptop, ipad , điện thoại
+
+Thành : Home, Detail Movie, Booking, register.
+Thuận : Footer, login, responsive.
+
+- Chức năng: 
+    + Có thể đăng ký tài khoản ,đăng nhập tài khoản vừa đăng ký
+    + Xem chi tiết, trailer phim có đường dẫn
+    + Có thể đặt vé xem phim từ xem chi tiết, xem từ tab Movie

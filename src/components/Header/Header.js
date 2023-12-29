@@ -58,8 +58,8 @@ export default function Header() {
     }
   };
   return (
-    <div className="h-20">
-      <div className="header_1 h-20">
+    <div className="h-20 ">
+      <div className="header_1 h-20 container">
         <div className="  flex items-center justify-between h-20 ">
           <span
             onClick={() => {
