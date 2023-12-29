@@ -65,11 +65,11 @@ export default function Header() {
             onClick={() => {
               navigative("/");
             }}
-            className="font-medium text-red-500 text-4xl animate-pulse cursor-pointer ml-10"
+            className="font-medium text-red-500 text-4xl animate-pulse cursor-pointer ml-0 sm:ml-10"
           >
             CyberFlix
           </span>
-          <div className="space-x-5 mr-10">{renderMenu()}</div>
+          <div className="space-x-5 mr-0 sm:mr-10">{renderMenu()}</div>
         </div>
       </div>
     </div>
