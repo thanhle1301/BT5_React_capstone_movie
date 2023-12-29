@@ -59,17 +59,17 @@ export default function Header() {
   };
   return (
     <div className="h-20 ">
-      <div className="header_1 h-20 container">
+      <div className="header_1 h-20">
         <div className="  flex items-center justify-between h-20 ">
           <span
             onClick={() => {
               navigative("/");
             }}
-            className="font-medium text-red-500 text-4xl animate-pulse cursor-pointer"
+            className="font-medium text-red-500 text-4xl animate-pulse cursor-pointer ml-10"
           >
             CyberFlix
           </span>
-          <div className="space-x-5">{renderMenu()}</div>
+          <div className="space-x-5 mr-10">{renderMenu()}</div>
         </div>
       </div>
     </div>
